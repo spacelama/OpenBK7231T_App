@@ -35,6 +35,7 @@ Do not add anything here, as it will overwritten with next rebuild.
 | BridgePulseLength | [FloatValue] | Setup value for bridge pulse len |
 | cancelRepeatingEvent | [UserIDInteger] | Stops a given repeating event with a specified ID |
 | Ch | [InputValue] | An alternate command to access channels. It returns all used channels in JSON format. The syntax is ChINDEX value, there is no space between Ch and channel index. It can be sent without value to poll channel values. |
+| chSetupLimit | [limitChannelIndex] [maxAllowedLimitChannelDelta] [timeoutOr-1] [commandToRun] | After executing this command, chargingLimit driver will watch channel for changes and count down timer. When a timer runs our or channel change (from the initial state) is larger than given margin, given command is run |
 | CHT_Calibrate |  | Calibrate the CHT Sensor as Tolerance is +/-2 degrees C.<br/>e.g.:SHT_Calibrate -4 10 |
 | CHT_Cycle | [int] | This is the interval between measurements in seconds, by default 1. Max is 255.<br/>e.g.:CHT_Cycle 60 |
 | ClampChannel | [ChannelIndex][Min][Max] | Clamps given channel value to a range. |
@@ -176,7 +177,7 @@ Do not add anything here, as it will overwritten with next rebuild.
 | resetSVM |  | Resets all SVM and clears all scripts. |
 | restart |  | Reboots the module |
 | return |  | Script-only command. Currently it just stops totally current script thread. |
-| SafeMode |  | Forces device reboot into safe mode (open ap with disabled drivers) |
+| SafeMode | [OptionalDelayBeforeRestart] | Forces device reboot into safe mode (open ap with disabled drivers). Argument is a delay to restart in seconds, optional, minimal delay is 1 |
 | scanI2C |  |  |
 | scheduleHADiscovery | [Seconds] | This will schedule HA discovery, the discovery will happen with given number of seconds, but timer only counts when MQTT is connected. It will not work without MQTT online, so you must set MQTT credentials first. |
 | sendGet | [TargetURL] | Sends a HTTP GET request to target URL. May include GET arguments. Can be used to control devices by Tasmota HTTP protocol. Command supports argument expansion, so $CH11 changes to value of channel 11, etc, etc. |
@@ -196,7 +197,7 @@ Do not add anything here, as it will overwritten with next rebuild.
 | SetPinChannel | [PinIndex][ChannelIndex] | This allows you to set a channel linked to pin from console. Usually it's easier to do this through WWW panel, so you don't have to use this command. |
 | SetPinRole | [PinRole][RoleIndexOrName] | This allows you to set a pin role, for example a Relay role, or Button, etc. Usually it's easier to do this through WWW panel, so you don't have to use this command. |
 | SetStartValue | [Channel][Value] | Sets the startup value for a channel. Used for start values for relays. Use 1 for High, 0 for low and -1 for 'remember last state' |
-| SetupEnergyStats | [Enable1or0][SampleTime][SampleCount][JSonEnable] | Setup Energy Statistic Parameters: [enable<0|1>] [sample_time<10..900>] [sample_count<10..180>] [JsonEnable<0|1>]. JSONEnable is optional. |
+| SetupEnergyStats | [Enable1or0][SampleTime][SampleCount][JSonEnable] | Setup Energy Statistic Parameters: [enable 0 or 1] [sample_time[10..90]] [sample_count[10..180]] [JsonEnable 0 or 1]. JSONEnable is optional. |
 | SetupTestPower |  | NULL |
 | SGP_cycle | [int] | change cycle of measurement by default every 10 seconds 0 to deactivate<br/>e.g.:SGP_Cycle 60 |
 | SGP_GetBaseline |  | SGP Get baseline<br/>e.g.:SGP_GetBaseline |
